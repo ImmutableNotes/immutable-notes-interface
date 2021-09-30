@@ -25,7 +25,7 @@ const QR = React.memo(
             srcSet(url);
           }
         },
-        (e) => window.alert('QR error: ' + e)
+        (e) => window.alert('QR error: ' + JSON.stringify(e))
       );
     }, [data]);
 

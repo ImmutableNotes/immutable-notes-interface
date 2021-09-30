@@ -22,7 +22,7 @@ const Home = ({ history, vbInstance }: Props) => {
         (block) => {
           return history.push(`/hash/${block.hash}`);
         },
-        (e) => window.alert(method + ' error: ' + e)
+        (e) => window.alert(method + ' error: ' + JSON.stringify(e))
       );
     }
   }, [relatedNoteHash, history, vbInstance, note]);

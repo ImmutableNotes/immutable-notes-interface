@@ -46,7 +46,7 @@ const Hash = ({
             );
           }
         },
-        (e) => window.alert('Error1: ' + e)
+        (e) => window.alert('getNoteByHash error: ' + JSON.stringify(e))
       );
     }
   }, [hash, note, setState]);

@@ -18,9 +18,9 @@ export const WalletButton = ({ vbInstance, setState }: Props) => {
     }
     const vbInstance = new Connector({ bridge: BRIDGE });
     vbInstance.createSession().then(() => connectURISet(vbInstance.uri));
-    vbInstance.on('connect', (err: Error | null, payload: any | null) => {
-      if (err) {
-        return window.alert('Error2: ' + err);
+    vbInstance.on('connect', (e: Error | null, payload: any | null) => {
+      if (e) {
+        return window.alert('connect error: ' + JSON.stringify(e));
       }
       const { accounts } = payload.params[0];
       if (!accounts || !accounts[0]) throw new Error('address is null');

@@ -54,7 +54,7 @@ const NoteCard = ({ hash, setState, vbInstance, notes }: Props) => {
                   () => {
                     setState!({ notes: { [hash]: { relatedNoteHash } } }, { deepMerge: true });
                   },
-                  (e) => window.alert('updateRelatedNoteHash error: ' + e)
+                  (e) => window.alert('updateRelatedNoteHash error: ' + JSON.stringify(e))
                 );
               }
             }}

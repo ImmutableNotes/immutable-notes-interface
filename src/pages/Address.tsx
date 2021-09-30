@@ -68,7 +68,7 @@ const Address = ({
             getMoreNotes(+arr[1] - 1);
           }
         },
-        (e) => window.alert('getTimelineStats error: ' + e)
+        (e) => window.alert('getTimelineStats error: ' + JSON.stringify(e))
       );
     }
   }, [author, timelines, getMoreNotes, setState]);
@@ -90,7 +90,7 @@ const Address = ({
                       () => {
                         setState!({ timelines: { [author]: { bio } } }, { deepMerge: true });
                       },
-                      (e) => window.alert('updateBio error: ' + e)
+                      (e) => window.alert('updateBio error: ' + JSON.stringify(e))
                     );
                   }
                 }}
