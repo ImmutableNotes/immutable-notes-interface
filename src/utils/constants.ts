@@ -14,3 +14,5 @@ const tokensArr: [
 export const tokensMap = new Map(tokensArr);
 
 export const tipTokenIds = tokensArr.map(([tokenId]) => tokenId);
+
+export const zeroHash = '0'.repeat(64);

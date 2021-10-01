@@ -5,6 +5,7 @@ import { connect } from '../utils/wep-state';
 import { callContract } from '../utils/vitescripts';
 import TipButtonRow from './TipButtonRow';
 import { useMemo } from 'react';
+import { zeroHash } from '../utils/constants';
 
 const TWEET_URL = 'https://twitter.com/intent/tweet?text=';
 
@@ -49,7 +50,7 @@ const NoteCard = ({ hash, setState, vbInstance, notes }: Props) => {
               if (vbInstance && relatedNoteHash !== null) {
                 callContract(vbInstance, 'updateRelatedNoteHash', [
                   hash,
-                  relatedNoteHash === '' ? '0'.repeat(64) : relatedNoteHash,
+                  relatedNoteHash === '' ? zeroHash : relatedNoteHash,
                 ]).then(
                   () => {
                     setState!({ notes: { [hash]: { relatedNoteHash } } }, { deepMerge: true });

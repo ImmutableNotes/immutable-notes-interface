@@ -6,6 +6,7 @@ import { State } from '../utils/types';
 import { callContract } from '../utils/vitescripts';
 import { RouteComponentProps } from 'react-router';
 import { isValidHash } from '../utils/misc';
+import { zeroHash } from '../utils/constants';
 
 type Props = State & RouteComponentProps;
 
@@ -17,12 +18,11 @@ const Home = ({ history, vbInstance }: Props) => {
       if (relatedNoteHash && !isValidHash(relatedNoteHash)) {
         return window.alert('Invalid related note hash');
       }
-      const method = relatedNoteHash ? 'recordNoteWithRelatedNoteHash' : 'recordNote';
-      callContract(vbInstance, method, relatedNoteHash ? [note, relatedNoteHash] : [note]).then(
+      callContract(vbInstance, 'recordNote', [note, relatedNoteHash || zeroHash]).then(
         (block) => {
           return history.push(`/hash/${block.hash}`);
         },
-        (e) => window.alert(method + ' error: ' + JSON.stringify(e))
+        (e) => window.alert('recordNote error: ' + JSON.stringify(e))
       );
     }
   }, [relatedNoteHash, history, vbInstance, note]);
