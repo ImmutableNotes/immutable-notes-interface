@@ -68,7 +68,7 @@ const NoteCard = ({ hash, setState, vbInstance, notes }: Props) => {
         <div className="flex flex-1 justify-end">
           <a
             title="Twitter"
-            href={`${TWEET_URL}${encodeURI(`${text}\n\nimmutablenotes.com/hash/${hash}`)}`}
+            href={`${TWEET_URL}${encodeURI(`${text}\n\napp.immutablenotes.com/hash/${hash}`)}`}
             target="_blank noreferrer noopener"
             className="xy ml-4 border-2 border-gray-300 text-gray-600 fill-current text-lg rounded px-1"
           >
