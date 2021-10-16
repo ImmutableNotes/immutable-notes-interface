@@ -41,7 +41,7 @@ const PageContainer = ({ title, children, history }: Props) => {
           >
             <TextInput
               value={query}
-              onUserInput={(v) => querySet(v)}
+              onUserInput={(v) => querySet(v.replace(/\s/g, ''))}
               className="w-full px-4 py-1 text-lg bg-gray-100"
               placeholder="Search hashes or addresses"
             />
