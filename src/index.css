@@ -31,9 +31,17 @@ button[disabled] {
 }
 
 .xy {
-  @apply flex justify-center items-center;
+  @apply flex justify-center items-center flex-col;
 }
 
 button.rect {
   @apply font-semibold rounded-lg px-4 py-2 text-xl;
+}
+
+.bg-tinted {
+  @apply bg-black bg-opacity-30;
+}
+
+.menu-button {
+  @apply block text-xl p-2;
 }

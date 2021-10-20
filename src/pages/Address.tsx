@@ -75,10 +75,10 @@ const Address = ({
 
   return (
     <PageContainer>
-      <h1 className="text-4xl break-all">{author}</h1>
+      <h1 className="text-3xl md:text-4xl break-all">{author}</h1>
       {timeline && (
         <>
-          <p className="">
+          <p>
             {timeline.bio}{' '}
             {vbInstance?.accounts[0] === author && (
               <button
@@ -99,7 +99,7 @@ const Address = ({
               </button>
             )}
           </p>
-          <p className="">
+          <p>
             {timeline.totalNotes} note{timeline.totalNotes === 1 ? '' : 's'}
           </p>
           <TipButtonRow author={author} />

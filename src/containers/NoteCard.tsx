@@ -23,7 +23,7 @@ const NoteCard = ({ hash, setState, vbInstance, notes }: Props) => {
   return (
     <div className="space-y-4">
       <A to={`/hash/${hash}`}>
-        <h1 className="text-4xl inline">{text}</h1>
+        <h1 className="text-3xl md:text-4xl inline">{text}</h1>
       </A>
       <div>
         <A to={`/address/${author}`}>{author}</A>

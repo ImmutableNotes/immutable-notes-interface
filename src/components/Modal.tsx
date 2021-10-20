@@ -15,7 +15,7 @@ const Modal = ({ onClose = () => {}, children }: Props) => {
   return mounted
     ? ReactDOM.createPortal(
         <div
-          className="fixed inset-0 bg-black bg-opacity-30 overflow-scroll flex flex-col"
+          className="fixed inset-0 bg-tinted overflow-scroll flex flex-col"
           onClick={() => {
             !mouseDraggingModal.current && onClose();
             mouseDraggingModal.current = false;

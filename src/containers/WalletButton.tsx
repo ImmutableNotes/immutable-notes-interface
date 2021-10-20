@@ -8,9 +8,12 @@ import { State } from '../utils/types';
 
 const BRIDGE = 'wss://biforst.vite.net';
 
-type Props = State;
+type Props = State & {
+  menu?: boolean;
+  onConnect?: () => void;
+};
 
-export const WalletButton = ({ vbInstance, setState }: Props) => {
+export const WalletButton = ({ menu, onConnect, vbInstance, setState }: Props) => {
   const [connectURI, connectURISet] = useState('');
   const connectWallet = useCallback(() => {
     if (connectURI) {
@@ -26,17 +29,24 @@ export const WalletButton = ({ vbInstance, setState }: Props) => {
       if (!accounts || !accounts[0]) throw new Error('address is null');
       setState!({ vbInstance });
       connectURISet('');
+      if (onConnect) {
+        onConnect();
+      }
     });
     vbInstance.on('disconnect', () => {
       setState!({ vbInstance: null });
       // vbInstance.destroy();
     });
-  }, [setState, connectURI]);
+  }, [setState, connectURI, onConnect]);
 
   return (
     <div>
       <button
-        className={`rect ${vbInstance ? 'border-2 text-gray-600 border-gray-600' : 'shadow text-white bg-blue-500'}`}
+        className={
+          menu
+            ? `w-screen flex text-left menu-button ${vbInstance ? 'text-gray-600 ' : 'font-semibold text-blue-500'}`
+            : `rect ${vbInstance ? 'border-2 text-gray-600 border-gray-600' : 'shadow text-white bg-blue-500'}`
+        }
         onClick={() => {
           if (vbInstance) {
             // vbInstance.killSession(); // Throws error from @vite/connector
@@ -51,7 +61,7 @@ export const WalletButton = ({ vbInstance, setState }: Props) => {
       {vbInstance && (
         <A
           to={`/address/${vbInstance.accounts[0]}`}
-          className="block mt-1 text-gray-600"
+          className={`block text-gray-600 ${menu ? 'menu-button' : 'mt-1'}`}
           title={vbInstance.accounts[0]}
         >
           {vbInstance.accounts[0].substring(0, 10)}...{vbInstance.accounts[0].substring(50)}

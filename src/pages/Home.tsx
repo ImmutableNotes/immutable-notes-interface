@@ -43,7 +43,7 @@ const Home = ({ history, vbInstance }: Props) => {
           value={note}
           onUserInput={(v) => noteSet(v)}
           placeholder="What would you like to record? Forever. Be careful. And have fun!"
-          className="text-4xl resize-none h-72 w-full"
+          className="resize-none text-3xl md:text-4xl h-60 md:h-72 w-full"
           onMetaEnter={record}
         />
         <div className="mt-2 flex justify-end space-x-4">
@@ -51,7 +51,7 @@ const Home = ({ history, vbInstance }: Props) => {
             value={relatedNoteHash}
             onUserInput={(v) => relatedNoteHashSet(v)}
             placeholder="Related note hash"
-            className="text-xl flex-1"
+            className="text-xl flex-1 w-0"
             onMetaEnter={record}
           />
           <button
