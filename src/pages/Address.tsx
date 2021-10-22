@@ -75,7 +75,7 @@ const Address = ({
 
   return (
     <PageContainer>
-      <h1 className="text-3xl md:text-4xl break-all">{author}</h1>
+      <h1 className="text-3xl break-all">{author}</h1>
       {timeline && (
         <>
           <p>

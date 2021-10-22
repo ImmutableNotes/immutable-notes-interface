@@ -1,30 +1,41 @@
+import { useMemo } from 'react';
 import { formatDate, isValidHash, TwitterIcon } from '../utils/misc';
 import A from '../components/A';
 import { State, Note } from '../utils/types';
 import { connect } from '../utils/wep-state';
 import { callContract } from '../utils/vitescripts';
 import TipButtonRow from './TipButtonRow';
-import { useMemo } from 'react';
 import { zeroHash } from '../utils/constants';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { breakURLs, linkText } from '../utils/strings';
 
 const TWEET_URL = 'https://twitter.com/intent/tweet?text=';
 
-type Props = State & {
-  hash: string;
-};
+const noteTextClasses = 'text-3xl inline';
 
-const NoteCard = ({ hash, setState, vbInstance, notes }: Props) => {
-  const note = useMemo<Note | undefined>(() => notes![hash], [notes, hash]);
+type Props = State &
+  RouteComponentProps & {
+    hash: string;
+  };
+
+const NoteCard = ({ match, hash, setState, vbInstance, notes }: Props) => {
+  const note = useMemo<Note | undefined>(() => notes![hash || ''], [notes, hash]);
+
   if (!note) {
     return null;
   }
+
   const { timestamp, text, author, relatedNoteHash } = note;
 
   return (
     <div className="space-y-4">
-      <A to={`/hash/${hash}`}>
-        <h1 className="text-3xl md:text-4xl inline">{text}</h1>
-      </A>
+      {match.path === '/hash/:hash' ? (
+        <h1 className={noteTextClasses}>{linkText(text)}</h1>
+      ) : (
+        <A to={`/hash/${hash}`}>
+          <h1 className={noteTextClasses}>{breakURLs(text)}</h1>
+        </A>
+      )}
       <div>
         <A to={`/address/${author}`}>{author}</A>
         {' | '}
@@ -81,4 +92,4 @@ const NoteCard = ({ hash, setState, vbInstance, notes }: Props) => {
   );
 };
 
-export default connect('vbInstance, notes')(NoteCard);
+export default connect('vbInstance, notes')(withRouter(NoteCard));
