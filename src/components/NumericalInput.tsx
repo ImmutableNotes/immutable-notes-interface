@@ -12,11 +12,13 @@ export const NumericalInput = React.memo(
   ({
     value,
     onUserInput,
+    maxDecimals = 0,
     placeholder,
     ...rest
   }: {
     value: string | number;
     onUserInput: (input: string) => void;
+    maxDecimals?: number;
   } & Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'onChange' | 'as'>) => {
     return (
       <input
@@ -25,7 +27,11 @@ export const NumericalInput = React.memo(
         onChange={(event) => {
           const nextUserInput = event.target.value.replace(/,/g, '');
           if (nextUserInput === '' || inputRegex.test(escapeRegExp(nextUserInput))) {
-            onUserInput(nextUserInput);
+            const index = nextUserInput.indexOf('.');
+            const numDecimals = index === -1 ? 0 : nextUserInput.length - index - 1;
+            if (numDecimals <= maxDecimals) {
+              onUserInput(nextUserInput);
+            }
           }
         }}
         // universal input options

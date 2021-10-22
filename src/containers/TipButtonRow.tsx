@@ -40,6 +40,8 @@ const TipButtonRow = ({ notes, timelines, setState, author, hash, vbInstance, ch
     return timelines![author].tips;
   }, [timelines, notes, author, hash]);
 
+  const token = useMemo(() => tokensMap.get(tipTokenId)!, [tipTokenId]);
+
   return (
     <div className="flex space-x-4">
       {tipTokenIds.map((tokenId) => (
@@ -59,10 +61,11 @@ const TipButtonRow = ({ notes, timelines, setState, author, hash, vbInstance, ch
       {children}
       {tipTokenId && vbInstance && (
         <Modal onClose={() => tipTokenIdSet('')}>
-          <p className="text-3xl">Tip ${tokensMap.get(tipTokenId)?.ticker}</p>
+          <p className="text-3xl">Tip ${token.ticker}</p>
           <p className="text-gray-500 text-lg mb-4">{tipTokenId}</p>
           <div className="flex items-center">
             <NumericalInput
+              maxDecimals={token.decimals}
               value={tipAmount}
               onUserInput={(v) => tipAmountSet(v)}
               placeholder="Amount"
@@ -71,7 +74,6 @@ const TipButtonRow = ({ notes, timelines, setState, author, hash, vbInstance, ch
             <button
               className="rect text-white bg-blue-500"
               onClick={() => {
-                const token = tokensMap.get(tipTokenId);
                 if (token) {
                   callContract(
                     vbInstance,

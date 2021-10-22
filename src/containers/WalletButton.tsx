@@ -5,6 +5,7 @@ import QR from '../components/QR';
 import Modal from '../components/Modal';
 import A from '../components/A';
 import { State } from '../utils/types';
+import { PROD } from '../utils/constants';
 
 const BRIDGE = 'wss://biforst.vite.net';
 
@@ -35,7 +36,6 @@ export const WalletButton = ({ menu, onConnect, vbInstance, setState }: Props) =
     });
     vbInstance.on('disconnect', () => {
       setState!({ vbInstance: null });
-      // vbInstance.destroy();
     });
   }, [setState, connectURI, onConnect]);
 
@@ -49,7 +49,9 @@ export const WalletButton = ({ menu, onConnect, vbInstance, setState }: Props) =
         }
         onClick={() => {
           if (vbInstance) {
-            // vbInstance.killSession(); // Throws error from @vite/connector
+            if (PROD) {
+              vbInstance.killSession(); // Throws error from @vite/connector - not great in dev
+            }
             setState!({ vbInstance: null }); // TODO: update types so that you don't have to use setState!
           } else {
             connectWallet();
