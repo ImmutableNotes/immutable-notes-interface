@@ -10,7 +10,7 @@ import { zeroHash } from '../utils/constants';
 
 type Props = State & RouteComponentProps;
 
-const Home = ({ history, vbInstance }: Props) => {
+const Home = ({ history, setState, vbInstance }: Props) => {
   const [note, noteSet] = useState('');
   const [relatedNoteHash, relatedNoteHashSet] = useState('');
   const record = useCallback(() => {
@@ -20,12 +20,24 @@ const Home = ({ history, vbInstance }: Props) => {
       }
       callContract(vbInstance, 'recordNote', [note, relatedNoteHash || zeroHash]).then(
         (block) => {
+          setState!({
+            notes: {
+              [block.hash]: {
+                hash: block.hash,
+                timestamp: Date.now(),
+                text: note,
+                author: vbInstance.accounts[0],
+                tips: {},
+                relatedNoteHash,
+              },
+            },
+          });
           return history.push(`/hash/${block.hash}`);
         },
         (e) => window.alert('recordNote error: ' + JSON.stringify(e))
       );
     }
-  }, [relatedNoteHash, history, vbInstance, note]);
+  }, [relatedNoteHash, history, vbInstance, note, setState]);
 
   const submitDisabled = useMemo(() => !vbInstance || !note.length, [vbInstance, note]);
 

@@ -1,4 +1,3 @@
-import { RouteComponentProps } from 'react-router-dom';
 import Connector from '@vite/connector';
 import { setState } from './wep-state';
 
@@ -16,7 +15,6 @@ export type State = {
 export type Timeline = {
   bio: string;
   totalNotes: number;
-  // tipsCount: string[];
   tips: { [tokenId: string]: number };
   noteHashHistory: string[];
 };
@@ -26,7 +24,6 @@ export type Note = {
   timestamp: number;
   text: string;
   author: string;
-  // tipsCount: string[];
   tips: { [tokenId: string]: number };
   relatedNoteHash: string;
 };
