@@ -18,7 +18,7 @@ const TipButton = ({
 }) => {
   const { ticker } = tokensMap.get(tokenId) || {};
   return (
-    <button onClick={() => onClick(tokenId)} className={`border-2 border-gray-300 text-gray-600 text-lg rounded px-1`}>
+    <button onClick={() => onClick(tokenId)} className="note-card-button whitespace-nowrap">
       ${ticker} {stringIntToAmount(count, 0, 5)}
     </button>
   );
@@ -43,21 +43,29 @@ const TipButtonRow = ({ notes, timelines, setState, author, hash, vbInstance, ch
   const token = useMemo(() => tokensMap.get(tipTokenId)!, [tipTokenId]);
 
   return (
-    <div className="flex space-x-4">
-      {tipTokenIds.map((tokenId) => (
-        <TipButton
-          key={tokenId}
-          tokenId={tokenId}
-          count={tips[tokenId]}
-          onClick={() =>
-            vbInstance
-              ? author === vbInstance.accounts[0]
-                ? window.alert('You cannot tip yourself')
-                : tipTokenIdSet(tokenId)
-              : window.alert('Connect wallet to tip')
-          }
-        />
-      ))}
+    <div className="flex space-x-2 md:space-x-4">
+      <div className="flex flex-1 relative">
+        <div className="flex flex-1 flex-nowrap space-x-2 md:space-x-4 overflow-scroll w-0">
+          {tipTokenIds.map((tokenId) => (
+            <TipButton
+              key={tokenId}
+              tokenId={tokenId}
+              count={tips[tokenId]}
+              onClick={() =>
+                vbInstance
+                  ? author === vbInstance.accounts[0]
+                    ? window.alert('You cannot tip yourself')
+                    : tipTokenIdSet(tokenId)
+                  : window.alert('Connect wallet to tip')
+              }
+            />
+          ))}
+          {/* <button onClick={() => {}} className="note-card-button">
+          Other
+        </button> */}
+        </div>
+        <div className="w-4 h-full absolute right-0 bg-gradient-to-l from-white" />
+      </div>
       {children}
       {tipTokenId && vbInstance && (
         <Modal onClose={() => tipTokenIdSet('')}>

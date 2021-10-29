@@ -3,7 +3,7 @@
 import provider from '@vite/vitejs-ws';
 import { ViteAPI, abi, accountBlock } from '@vite/vitejs';
 import Connector from '@vite/connector';
-var Buffer = require('buffer/').Buffer; // note: the trailing slash is important!
+import { Buffer } from 'buffer/'; // note: the trailing slash is important!
 
 const CONTRACT = {
   binary:
@@ -110,7 +110,7 @@ async function subscribeToEvent(eventName, callback){
 */
 
 // from https://github.com/weserickson/vite-staking-pools/blob/master/test.js
-export const callOffChain = (methodName: string, params: any[]) => {
+export const callOffChain = (methodName: string, params?: any[]) => {
   const ehex = abi.encodeFunctionCall(CONTRACT.abi, params, methodName);
   const ebase64 = Buffer.from(ehex, 'hex').toString('base64');
   const code = Buffer.from(CONTRACT.offChain, 'hex').toString('base64');

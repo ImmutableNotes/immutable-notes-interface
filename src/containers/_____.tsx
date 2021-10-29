@@ -1,6 +1,7 @@
 import { connect } from '../utils/wep-state';
+import { State } from '../utils/types';
 
-type Props = { key: string };
+type Props = State & { key: string };
 
 const _____ = ({ key }: Props) => {
   return (

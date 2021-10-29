@@ -7,7 +7,7 @@ const ExternalLinkIcons = () => {
       <A
         title="Information"
         href="https://immutablenotes.com"
-        className="xy rounded-full h-6 w-6 bg-gray-500 font-bold text-gray-50 text-xl "
+        className="xy rounded-full h-6 w-6 bg-gray-500 font-bold text-gray-50 text-xl"
       >
         i
       </A>

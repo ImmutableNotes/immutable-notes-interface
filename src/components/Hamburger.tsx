@@ -3,7 +3,7 @@ type Props = {
   onChange: (open: boolean) => void;
 };
 
-const Hambuger = ({ open, onChange }: Props) => {
+const Hamburger = ({ open, onChange }: Props) => {
   const line = `h-1 w-6 rounded-full transform bg-black`; // transition duration-300
   return (
     <button className="md:hidden space-y-1 xy flex-col h-12 w-12 group" onClick={() => onChange(!open)}>
@@ -14,4 +14,4 @@ const Hambuger = ({ open, onChange }: Props) => {
   );
 };
 
-export default Hambuger;
+export default Hamburger;

@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { formatDate, isValidHash, TwitterIcon } from '../utils/misc';
+import { useMemo, useState } from 'react';
+import { formatDate, isValidHash, RelatedIcon, TwitterIcon } from '../utils/misc';
 import A from '../components/A';
 import { State, Note } from '../utils/types';
 import { connect } from '../utils/wep-state';
@@ -8,6 +8,8 @@ import TipButtonRow from './TipButtonRow';
 import { zeroHash } from '../utils/constants';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { breakURLs, linkText } from '../utils/strings';
+import Modal from '../components/Modal';
+import NoteRecorder from './NoteRecorder';
 
 const TWEET_URL = 'https://twitter.com/intent/tweet?text=';
 
@@ -20,6 +22,7 @@ type Props = State &
 
 const NoteCard = ({ match, hash, setState, vbInstance, notes }: Props) => {
   const note = useMemo<Note | undefined>(() => notes![hash || ''], [notes, hash]);
+  const [hashToRelate, hashToRelateSet] = useState('');
 
   if (!note) {
     return null;
@@ -37,7 +40,9 @@ const NoteCard = ({ match, hash, setState, vbInstance, notes }: Props) => {
         </A>
       )}
       <div>
-        <A to={`/address/${author}`}>{author}</A>
+        <A className="break-all" to={`/address/${author}`}>
+          {author}
+        </A>
         {' | '}
         <span className="minor">{formatDate(timestamp, true)}</span>
       </div>
@@ -76,18 +81,28 @@ const NoteCard = ({ match, hash, setState, vbInstance, notes }: Props) => {
         )}
       </div>
       <TipButtonRow author={author} hash={hash}>
-        <div className="flex flex-1 justify-end">
-          <a
-            title="Twitter"
-            href={`${TWEET_URL}${encodeURI(`${text}\n\napp.immutablenotes.com/hash/${hash}`)}`}
-            target="_blank noreferrer noopener"
-            className="xy ml-4 border-2 border-gray-300 text-gray-600 fill-current text-lg rounded px-1"
-          >
-            <TwitterIcon size={20} />
-            <span className="ml-1">Tweet</span>
-          </a>
-        </div>
+        <button
+          className="note-card-button"
+          onClick={() => (vbInstance ? hashToRelateSet(hash) : window.alert('Connect wallet to relate note'))}
+        >
+          <RelatedIcon size={20} />
+          <span className="ml-1 hidden md:block">Relate</span>
+        </button>
+        <a
+          title="Twitter"
+          href={`${TWEET_URL}${encodeURI(`${text}\n\napp.immutablenotes.com/hash/${hash}`)}`}
+          target="_blank noreferrer noopener"
+          className="note-card-button"
+        >
+          <TwitterIcon size={20} />
+          <span className="ml-1 hidden md:block">Tweet</span>
+        </a>
       </TipButtonRow>
+      {hashToRelate && (
+        <Modal onClose={() => hashToRelateSet('')} className="record-modal">
+          <NoteRecorder hashToRelate={hashToRelate} relatedNoteText={text} />
+        </Modal>
+      )}
     </div>
   );
 };
